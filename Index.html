@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encuesta de Convivencia Laboral</title>
+
+<style>
+  body {
+    font-family: "Futura", "Futura PT", "Century Gothic", Arial, sans-serif;
+    background: #003366;
+    margin: 20px;
+  }
+
+  form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 800px;
+    margin: auto;
+  }
+
+  .logo-container {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .logo-container img {
+    max-width: 200px;
+    height: auto;
+  }
+
+  h1, h2 {
+    color: #19287F;
+  }
+
+  h1 { text-align: center; }
+
+  .modulo {
+    border: 1px solid #FFD400;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background: #FFD400;
+  }
+
+  textarea {
+    width: 100%;
+    height: 80px;
+    margin-top: 10px;
+  }
+
+  .campo { margin-bottom: 10px; }
+  label { display: block; margin: 4px 0; }
+
+  .submit-btn {
+    background: #19287F;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+
+  .submit-btn:hover {
+    background: #FFD400;
+    color: black;
+    cursor: pointer;
+  }
+
+  input[type="text"], select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    margin-top: 5px;
+  }
+
+  input[type="text"]:focus {
+    outline: none;
+    border-color: #19287F;
+    box-shadow: 0 0 5px rgba(25, 40, 127, 0.2);
+  }
+
+  /* Overlay general */
+  .overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    flex-direction: column;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .overlay.show {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .spinner {
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #FFD400;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .checkmark {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: none;
+    stroke-width: 3;
+    stroke: #4CAF50;
+    margin: 10px auto;
+  }
+
+  .mensaje-exito {
+    color: #fff;
+    font-size: 20px;
+    margin-top: 15px;
+    text-align: center;
+  }
+</style>
+</head>
+
+<body>
+
+<!-- Overlay -->
+<div class="overlay" id="overlay">
+  <div class="spinner" id="spinner"></div>
+  <svg class="checkmark" id="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+    <path class="checkmark__check" fill="none" d="M14 27l7 7 16-16"/>
+  </svg>
+  <div class="mensaje-exito" id="mensaje">Enviando datos...</div>
+</div>
+
+<form id="riesgoForm">
+  <div class="logo-container">
+    <img src="logo.png" alt="Logo de la empresa">
+  </div>
+
+  <h1>Comité de Convivencia</h1>
+  <h2>Encuesta de Convivencia Laboral</h2>
+  <p>
+    Estimado colaborador:  
+    Con el fin de mejorar nuestro ambiente laboral y fortalecer la convivencia en nuestra empresa, 
+    le invitamos a responder esta breve encuesta. Sus respuestas serán completamente confidenciales 
+    y contribuirán a crear un entorno más respetuoso y armonioso.
+  </p>
+
+  <div class="modulo">
+    <div class="campo">
+      <label for="Antiguedad">Antigüedad en la empresa:</label>
+      <input type="text" id="Antiguedad" name="Antiguedad" required>
+    </div>
+    <div class="campo">
+      <label for="area">Área</label>
+      <select id="area" name="area" required>
+        <option value="">Seleccione...</option>
+        <option>Gerencia</option>
+        <option>Ventas</option>
+        <option>Compras</option>
+        <option>Logística</option>
+        <option>Recursos Humanos</option>
+        <option>Marketing</option>
+        <option>SST</option>
+        <option>TI</option>
+        <option>Contabilidad</option>
+        <option>Jurídica</option>
+        <option>Cartera</option>
+        <option>Despachos</option>
+        <option>Recepción</option>
+        <option>Facturación</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Módulo A -->
+  <div class="modulo" id="modA">
+    <h2>Ambiente laboral</h2>
+    <label>1. ¿Cómo calificaría el ambiente general en su lugar de trabajo?</label>
+    <label><input type="radio" name="ambiente" value="Muy bueno"> Muy bueno</label>
+    <label><input type="radio" name="ambiente" value="Bueno"> Bueno</label>
+    <label><input type="radio" name="ambiente" value="Regular"> Regular</label>
+    <label><input type="radio" name="ambiente" value="Malo"> Malo</label>
+    <label><input type="radio" name="ambiente" value="Muy malo"> Muy malo</label>
+
+    <label>2. ¿Se siente respetado y valorado por sus compañeros y superiores?</label>
+    <label><input type="radio" name="respeto" value="Siempre"> Siempre</label>
+    <label><input type="radio" name="respeto" value="Frecuentemente"> Frecuentemente</label>
+    <label><input type="radio" name="respeto" value="Algunas veces"> Algunas veces</label>
+    <label><input type="radio" name="respeto" value="Rara vez"> Rara vez</label>
+    <label><input type="radio" name="respeto" value="Nunca"> Nunca</label>
+
+    <label>3. ¿Considera que la comunicación dentro de su equipo es clara y efectiva?</label>
+    <label><input type="radio" name="comunicacion" value="Siempre"> Siempre</label>
+    <label><input type="radio" name="comunicacion" value="Frecuentemente"> Frecuentemente</label>
+    <label><input type="radio" name="comunicacion" value="Algunas veces"> Algunas veces</label>
+    <label><input type="radio" name="comunicacion" value="Rara vez"> Rara vez</label>
+    <label><input type="radio" name="comunicacion" value="Nunca"> Nunca</label>
+  </div>
+
+  <!-- Módulo B -->
+ <div class="modulo" id="modB">
+  <h2>Conflictos y resolución</h2>
+
+  <label>1. ¿Ha presenciado o experimentado situaciones de conflicto laboral en su área?</label>
+  <label>
+    <input type="radio" name="conflicto" value="Sí" onchange="mostrarPreguntaConflicto(true)"> Sí
+  </label>
+  <label>
+    <input type="radio" name="conflicto" value="No" onchange="mostrarPreguntaConflicto(false)"> No
+  </label>
+
+  <!-- Esta parte se oculta por defecto -->
+  <div id="preguntaManejo" style="display:none; margin-top:10px;">
+    <label>¿considera que fueron manejadas de manera adecuada?</label>
+    <label><input type="radio" name="manejo_conflicto" value="Sí"> Sí</label>
+    <label><input type="radio" name="manejo_conflicto" value="Parcialmente"> Parcialmente</label>
+    <label><input type="radio" name="manejo_conflicto" value="No"> No</label>
+    <label><input type="radio" name="manejo_conflicto" value="No aplica"> No aplica</label>
+  </div>
+</div>
+
+<script>
+  function mostrarPreguntaConflicto(mostrar) {
+    const divPregunta = document.getElementById("preguntaManejo");
+    if (mostrar) {
+      divPregunta.style.display = "block";
+    } else {
+      divPregunta.style.display = "none";
+      // Limpia las opciones seleccionadas si se elige "No"
+      document.querySelectorAll("input[name='manejo_conflicto']").forEach(r => r.checked = false);
+    }
+  }
+</script>
+
+
+  <!-- Módulo C -->
+  <div class="modulo" id="modC">
+    <h2>Propuestas y sugerencias</h2>
+    <label>1. ¿Qué acciones cree que podrían mejorar la convivencia laboral en la empresa?</label>
+    <textarea id="sugerencias" name="sugerencias" placeholder="Por favor comparta sus ideas y sugerencias para mejorar la convivencia laboral." required></textarea>
+  </div>
+
+  <button type="submit" class="submit-btn">Enviar reporte</button>
+</form>
+
+<script>
+document.getElementById("riesgoForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const antiguedad = document.getElementById("Antiguedad").value.trim();
+  const area = document.getElementById("area").value;
+
+  if (!antiguedad || !area) {
+    alert("Por favor ingresa tu antigüedad y selecciona el área.");
+    return;
+  }
+
+  const overlay = document.getElementById("overlay");
+  const spinner = document.getElementById("spinner");
+  const checkmark = document.getElementById("checkmark");
+  const mensaje = document.getElementById("mensaje");
+
+  overlay.classList.add("show");
+  spinner.style.display = "block";
+  checkmark.style.display = "none";
+  mensaje.textContent = "Enviando respuestas...";
+
+  const data = {
+    Antiguedad: antiguedad,
+    area: area,
+    ambiente: document.querySelector("input[name='ambiente']:checked")?.value || "",
+    respeto: document.querySelector("input[name='respeto']:checked")?.value || "",
+    comunicacion: document.querySelector("input[name='comunicacion']:checked")?.value || "",
+    conflicto: document.querySelector("input[name='conflicto']:checked")?.value || "",
+    manejo_conflicto: document.querySelector("input[name='manejo_conflicto']:checked")?.value || "",
+    sugerencias: document.getElementById("sugerencias").value.trim()
+  };
+
+  const url = "https://script.google.com/macros/s/AKfycbzK4SmuhjMAFTjVbsU6MYF5iuy-Puty7no37amxJUfTELRYB_1TzCrN9ZOPJVs_928H2A/exec";
+  fetch(url, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  })
+  .then(() => {
+    spinner.style.display = "none";
+    checkmark.style.display = "block";
+    mensaje.textContent = "¡Formulario enviado correctamente!";
+
+    setTimeout(() => {
+      overlay.classList.remove("show");
+      document.getElementById("riesgoForm").reset();
+    }, 2500);
+  })
+  .catch(err => {
+    overlay.classList.remove("show");
+    alert("❌ Error al enviar: " + err.message);
+  });
+});
+</script>
+
+</body>
+</html>
